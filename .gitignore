@@ -1,5 +1,6 @@
 bin/
 obj/
+.publish/
 .vs/
 .vscode/
 .DS_Store
@@ -7,11 +8,3 @@ obj/
 *.suo
 *.zip
 .claude/
-bin/
-obj/
-.vs/
-.vscode/
-.DS_Store
-*.user
-*.suo
-*.zip
