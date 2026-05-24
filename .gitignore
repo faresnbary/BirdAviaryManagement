@@ -1,0 +1,17 @@
+bin/
+obj/
+.vs/
+.vscode/
+.DS_Store
+*.user
+*.suo
+*.zip
+.claude/
+bin/
+obj/
+.vs/
+.vscode/
+.DS_Store
+*.user
+*.suo
+*.zip
