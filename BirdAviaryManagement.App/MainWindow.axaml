@@ -198,11 +198,13 @@
                             <ComboBoxItem Content="Quarantine"/>
                         </ComboBox>
 
-                        <CheckBox x:Name="AvailableForSaleCheckBox"
+                        <ComboBox x:Name="AvailableForSaleComboBox"
                                   Grid.Row="1" Grid.Column="5"
-                                  Content="Available"
-                                  Foreground="#475569"
-                                  VerticalAlignment="Center"/>
+                                  Height="38"
+                                  SelectedIndex="1">
+                            <ComboBoxItem Content="True"/>
+                            <ComboBoxItem Content="False"/>
+                        </ComboBox>
                     </Grid>
 
                     <!-- Action buttons -->
@@ -318,7 +320,7 @@
                             <DataGridTextColumn Header="Color / Mutation" Binding="{Binding ColorMutation}"   Width="1.2*"/>
                             <DataGridTextColumn Header="Hatch Year"      Binding="{Binding HatchYear}"        Width="*"/>
                             <DataGridTextColumn Header="Status"          Binding="{Binding Status}"           Width="*"/>
-                            <DataGridCheckBoxColumn Header="Available"   Binding="{Binding IsAvailableForSale}" Width="*"/>
+                            <DataGridTextColumn Header="Available" Binding="{Binding AvailableForSaleText}" Width="*"/>
                         </DataGrid.Columns>
 
                     </DataGrid>

@@ -141,20 +141,7 @@ namespace BirdAviaryManagement.Core.Services
 
         private bool IsValidColorMutation(string colorMutation)
         {
-            if (string.IsNullOrWhiteSpace(colorMutation))
-            {
-                return false;
-            }
-
-            foreach (char c in colorMutation)
-            {
-                if (!char.IsLetter(c) && c != ' ')
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return ColorMutationValidator.IsValid(colorMutation);
         }
 
         private bool IsValidHatchYear(int hatchYear)

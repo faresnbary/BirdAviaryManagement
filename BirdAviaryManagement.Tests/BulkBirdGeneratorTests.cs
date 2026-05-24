@@ -73,10 +73,7 @@ namespace BirdAviaryManagement.Tests
             {
                 Assert.IsFalse(string.IsNullOrWhiteSpace(bird.ColorMutation));
 
-                foreach (char c in bird.ColorMutation)
-                {
-                    Assert.IsTrue(char.IsLetter(c) || c == ' ');
-                }
+                Assert.IsTrue(ColorMutationValidator.IsValid(bird.ColorMutation));
             }
         }
 

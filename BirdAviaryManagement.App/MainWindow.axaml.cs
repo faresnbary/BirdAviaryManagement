@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Avalonia;
 using Avalonia.Controls;
 using BirdAviaryManagement.Core.Models;
 using BirdAviaryManagement.Core.Services;
@@ -20,7 +21,29 @@ namespace BirdAviaryManagement.App
             bulkBirdGenerator = new BulkBirdGenerator();
             reportService = new ReportService();
 
+            ColorMutationTextBox.PropertyChanged += ColorMutationTextBox_PropertyChanged;
+
             RefreshGrid();
+        }
+
+        private void ColorMutationTextBox_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.Property != TextBox.TextProperty)
+            {
+                return;
+            }
+
+            string current = ColorMutationTextBox.Text ?? string.Empty;
+            string filtered = ColorMutationValidator.FilterInput(current);
+
+            if (current == filtered)
+            {
+                return;
+            }
+
+            int caretIndex = ColorMutationTextBox.CaretIndex;
+            ColorMutationTextBox.Text = filtered;
+            ColorMutationTextBox.CaretIndex = Math.Min(caretIndex, filtered.Length);
         }
 
         private void AddBirdButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -50,7 +73,7 @@ namespace BirdAviaryManagement.App
             if (string.IsNullOrWhiteSpace(colorMutation))
             {
                 ShowMessage(
-                    "Color / Mutation is required. Please enter letters only, such as Blue or כחול.",
+                    "Color / Mutation is required. Please enter English or Hebrew letters only, such as Blue or כחול.",
                     false
                 );
                 return;
@@ -59,7 +82,7 @@ namespace BirdAviaryManagement.App
             if (!IsColorMutationValid(colorMutation))
             {
                 ShowMessage(
-                    "Color / Mutation can contain letters only. Numbers and symbols are not allowed.",
+                    "Color / Mutation can contain English and Hebrew letters only. Numbers, symbols, and other languages are not allowed.",
                     false
                 );
                 return;
@@ -101,7 +124,7 @@ namespace BirdAviaryManagement.App
     ColorMutation = colorMutation,
     HatchYear = hatchYear,
     Status = GetSelectedBirdStatus(),
-    IsAvailableForSale = AvailableForSaleCheckBox.IsChecked == true,
+    IsAvailableForSale = AvailableForSaleComboBox.SelectedIndex == 0,
     IsBulkGenerated = false
 };
             bool added = birdService.AddBird(bird);
@@ -272,15 +295,7 @@ namespace BirdAviaryManagement.App
 
         private bool IsColorMutationValid(string colorMutation)
         {
-            foreach (char c in colorMutation)
-            {
-                if (!char.IsLetter(c) && c != ' ')
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return ColorMutationValidator.IsValid(colorMutation);
         }
 
         private BirdType GetSelectedBirdType()
@@ -314,7 +329,7 @@ namespace BirdAviaryManagement.App
             HatchYearTextBox.Text = string.Empty;
             BirdTypeComboBox.SelectedIndex = 0;
             StatusComboBox.SelectedIndex = 0;
-            AvailableForSaleCheckBox.IsChecked = false;
+            AvailableForSaleComboBox.SelectedIndex = 1;
         }
 
        private void ShowMessage(string message, bool isSuccess)

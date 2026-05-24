@@ -14,6 +14,8 @@ namespace BirdAviaryManagement.Core.Models
 
         public bool IsAvailableForSale { get; set; }
 
+        public string AvailableForSaleText => IsAvailableForSale ? "True" : "False";
+
         public bool IsBulkGenerated { get; set; }
     }
 }

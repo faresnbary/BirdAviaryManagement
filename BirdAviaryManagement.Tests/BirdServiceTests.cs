@@ -187,6 +187,31 @@ namespace BirdAviaryManagement.Tests
             Assert.IsTrue(result);
             Assert.AreEqual(1, service.GetAllBirds().Count);
         }
+
+        [TestMethod]
+        public void AddBird_WithNonEnglishHebrewColor_ShouldNotAddBird()
+        {
+            // Arrange
+            BirdService service = new BirdService();
+
+            Bird bird = new Bird
+            {
+                RingId = "B006",
+                Type = BirdType.Budgie,
+                ColorMutation = "أزرق",
+                HatchYear = 2022,
+                Status = BirdStatus.InAviary,
+                IsAvailableForSale = false
+            };
+
+            // Act
+            bool result = service.AddBird(bird);
+
+            // Assert
+            Assert.IsFalse(result);
+            Assert.AreEqual(0, service.GetAllBirds().Count);
+        }
+
     [TestMethod]
 public void AddBirds_WithValidBirdList_ShouldAddAllBirds()
 {
